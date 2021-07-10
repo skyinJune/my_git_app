@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_git_app/common/Global.dart';
 
-// void main() => Global.init().then((e) => runApp(MyApp()));
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // 需要加这么一行，不然跑不起来
+  await Global.init();
+  runApp(MyApp());
+}
+// void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
