@@ -26,7 +26,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   shared_preferences: 0.4.3
-  dio: 3.0.0
+  dio: 3.0.9
   provider: 4.0.1
 
 

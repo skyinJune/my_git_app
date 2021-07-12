@@ -16,11 +16,14 @@ class Git {
 
   BuildContext context;
   Options _options;
-  static Dio dio =
-      new Dio(BaseOptions(baseUrl: 'https://api.github.com/', headers: {
-    HttpHeaders.acceptHeader: "application/vnd.github.squirrel-girl-preview,"
-        "application/vnd.github.symmetra-preview+json",
-  }));
+  static Dio dio = new Dio(BaseOptions(
+      baseUrl: 'https://api.github.com/',
+      headers: {
+        HttpHeaders.acceptHeader:
+            "application/vnd.github.squirrel-girl-preview,"
+                "application/vnd.github.symmetra-preview+json",
+      },
+      contentType: 'application/json'));
 
   static void init() {
     // 添加缓存插件

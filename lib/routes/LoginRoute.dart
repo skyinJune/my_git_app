@@ -19,7 +19,7 @@ class _LoginRouteState extends State<LoginRoute> {
   @override
   void initState() {
     _unameController.text = Global.profile.lastLogin;
-    if (_unameController.text != null) {
+    if (_unameController.text.isNotEmpty) {
       // 如果上次有登录用户，则直接定位密码框
       _nameAutoFocus = false;
     }
@@ -90,15 +90,13 @@ class _LoginRouteState extends State<LoginRoute> {
   void _onLogin() async {
     if (!(_formKey.currentState as FormState).validate()) return;
     User user;
-    user = await Git(context).login(_unameController.text, _pwdController.text);
-    Provider.of<UserModel>(context, listen: false).user = user;
-    // try {
-    //   user =
-    //       await Git(context).login(_unameController.text, _pwdController.text);
-    //   Provider.of<UserModel>(context, listen: false).user = user;
-    // } catch (e) {
-    //   print(e.toString());
-    // }
+    try {
+      user =
+          await Git(context).login(_unameController.text, _pwdController.text);
+      Provider.of<UserModel>(context, listen: false).user = user;
+    } catch (e) {
+      print(e.toString());
+    }
     if (user != null) {
       print('login success!');
       Navigator.of(context).pop();
