@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_git_app/common/Global.dart';
@@ -16,14 +15,10 @@ class Git {
 
   BuildContext context;
   Options _options;
-  static Dio dio = new Dio(BaseOptions(
-      baseUrl: 'https://api.github.com/',
-      headers: {
-        HttpHeaders.acceptHeader:
-            "application/vnd.github.squirrel-girl-preview,"
-                "application/vnd.github.symmetra-preview+json",
-      },
-      contentType: 'application/json'));
+  static Dio dio =
+      new Dio(BaseOptions(baseUrl: 'https://api.github.com/', headers: {
+    HttpHeaders.acceptHeader: "application/vnd.github.v3+json",
+  }));
 
   static void init() {
     // 添加缓存插件
@@ -31,17 +26,17 @@ class Git {
     // 设置用户token（可能为null，代表未登录）
     dio.options.headers[HttpHeaders.authorizationHeader] = Global.profile.token;
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!Global.isRelease) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.findProxy = (uri) {
-          return 'PROXY 10.1.10.250:8888';
-        };
-        // 代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-      };
-    }
+    // if (!Global.isRelease) {
+    //   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //       (client) {
+    //     client.findProxy = (uri) {
+    //       return 'PROXY 10.1.10.250:8888';
+    //     };
+    //     // 代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
+    //     client.badCertificateCallback =
+    //         (X509Certificate cert, String host, int port) => true;
+    //   };
+    // }
   }
 
   // 登录接口，登录成功后返回用户信息
