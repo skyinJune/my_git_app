@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_git_app/common/Global.dart';
+import 'package:my_git_app/common/token.dart';
 import 'package:my_git_app/models/index.dart';
 
 class Git {
@@ -22,7 +22,7 @@ class Git {
 
   static void init() {
     // 添加缓存插件
-    dio.interceptors.add(Global.netCache);
+    // dio.interceptors.add(Global.netCache);
     // 设置用户token（可能为null，代表未登录）
     dio.options.headers[HttpHeaders.authorizationHeader] = Global.profile.token;
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
@@ -41,7 +41,7 @@ class Git {
 
   // 登录接口，登录成功后返回用户信息
   Future<User> login(String login, String pwd) async {
-    String basic = 'Basic ' + base64.encode(utf8.encode('$login:$pwd'));
+    String basic = 'token ${GitToken.token}';
     var r = await dio.get('/users/$login',
         options: _options.merge(
             headers: {HttpHeaders.authorizationHeader: basic},

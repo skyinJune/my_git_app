@@ -98,7 +98,6 @@ class _LoginRouteState extends State<LoginRoute> {
       print(e.toString());
     }
     if (user != null) {
-      print('login success!');
       Navigator.of(context).pop();
     }
   }
