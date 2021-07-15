@@ -42,7 +42,7 @@ Widget _buildBody(BuildContext context) {
         return ListTile(
           leading: new CircleAvatar(
             backgroundColor: Colors.blue,
-            child: Text('$index'),
+            child: Text('${index + 1}'),
           ),
           title: Text(list[index].name),
           subtitle: Text(list[index].description ?? '暂无简介'),
